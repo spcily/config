@@ -5,12 +5,12 @@
 # Get the directory of this script to reliably resolve relative paths.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-# Source (relative to the script) and destination paths
-CONFIG_SOURCE="$SCRIPT_DIR/.config/nvim"
-CONFIG_DEST="$HOME/.config/nvim"
-
 # Create the symlink, overwriting the destination if it exists.
 echo "Creating symlink for nvim config..."
-ln -sf "$CONFIG_SOURCE" "$CONFIG_DEST"
+mkdir -p "$HOME/.config/nvim" && rm -rf "$HOME/.config/nvim" && ln -sf "$SCRIPT_DIR/.config/nvim" "$HOME/.config/nvim"
+echo "Symlink created successfully."
 
+echo "Creating symlink for tmux config..."
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+mkdir -p "$HOME/.config/tmux" && ln -sf "$SCRIPT_DIR/.config/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf"
 echo "Symlink created successfully."
